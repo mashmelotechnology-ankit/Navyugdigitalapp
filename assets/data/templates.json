@@ -1,0 +1,120 @@
+{
+  "templates": [
+    {
+      "id": "business_1",
+      "name": "Business Card Pro",
+      "category": "Business",
+      "thumbnailPath": "assets/images/templates/business_card_thumb.png",
+      "backgroundImage": "",
+      "size": {
+        "width": 350,
+        "height": 200
+      },
+      "elements": [
+        {
+          "id": "title_1",
+          "type": "text",
+          "content": "Your Name",
+          "position": {
+            "x": 20,
+            "y": 30
+          },
+          "size": {
+            "width": 200,
+            "height": 40
+          },
+          "style": {
+            "fontSize": 24,
+            "isBold": true,
+            "color": "#1976D2",
+            "fontFamily": "Poppins"
+          }
+        },
+        {
+          "id": "subtitle_1",
+          "type": "text",
+          "content": "Professional Title",
+          "position": {
+            "x": 20,
+            "y": 80
+          },
+          "size": {
+            "width": 200,
+            "height": 30
+          },
+          "style": {
+            "fontSize": 16,
+            "color": "#666666",
+            "fontFamily": "Poppins"
+          }
+        }
+      ]
+    },
+    {
+      "id": "social_1",
+      "name": "Instagram Story",
+      "category": "Social",
+      "thumbnailPath": "assets/images/templates/social_story_thumb.png",
+      "backgroundImage": "",
+      "size": {
+        "width": 320,
+        "height": 568
+      },
+      "elements": [
+        {
+          "id": "main_text_1",
+          "type": "text",
+          "content": "Your Story Title",
+          "position": {
+            "x": 40,
+            "y": 200
+          },
+          "size": {
+            "width": 240,
+            "height": 80
+          },
+          "style": {
+            "fontSize": 32,
+            "isBold": true,
+            "color": "#FFFFFF",
+            "fontFamily": "Poppins",
+            "textAlign": "center"
+          }
+        }
+      ]
+    },
+    {
+      "id": "event_1",
+      "name": "Event Flyer",
+      "category": "Event",
+      "thumbnailPath": "assets/images/templates/event_flyer_thumb.png",
+      "backgroundImage": "",
+      "size": {
+        "width": 400,
+        "height": 600
+      },
+      "elements": [
+        {
+          "id": "event_title_1",
+          "type": "text",
+          "content": "EVENT TITLE",
+          "position": {
+            "x": 50,
+            "y": 100
+          },
+          "size": {
+            "width": 300,
+            "height": 60
+          },
+          "style": {
+            "fontSize": 28,
+            "isBold": true,
+            "color": "#FF5722",
+            "fontFamily": "Poppins",
+            "textAlign": "center"
+          }
+        }
+      ]
+    }
+  ]
+}
