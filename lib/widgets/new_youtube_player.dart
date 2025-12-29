@@ -115,14 +115,18 @@ class _YoutubeVideoPlayerFlutterState extends State<YoutubeVideoPlayerFlutter> {
   @override
   Widget build(BuildContext context) {
     return YoutubePlayerBuilder(
-        // onExitFullScreen: () {
-        //   // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
-        //   SystemChrome.setPreferredOrientations(DeviceOrientation.values);
-        // },
+        onExitFullScreen: () {
+          // The player forces portraitUp after exiting fullscreen. This overrides the behaviour.
+          // SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+        },
         player: YoutubePlayer(
           controller: _controller,
           showVideoProgressIndicator: true,
           progressIndicatorColor: Colors.blueAccent,
+          progressColors: ProgressBarColors(
+            playedColor: Colors.blueAccent,
+            handleColor: Colors.blueAccent,
+          ),
           topActions: <Widget>[
             const SizedBox(width: 8.0),
             Expanded(
@@ -150,35 +154,39 @@ class _YoutubeVideoPlayerFlutterState extends State<YoutubeVideoPlayerFlutter> {
           onReady: () {
             _isPlayerReady = true;
           },
-          // onEnded: (data) {
-          //   _controller
-          //       .load(_ids[(_ids.indexOf(data.videoId) + 1) % _ids.length]);
-          //   _showSnackBar('Next Video Started!');
-          // },
+          onEnded: (data) {
+            // Handle video end if needed
+            log('Video Ended');
+          },
         ),
         builder: (context, player) => Scaffold(
-              appBar: AppBar(),
-              body: Center(
-                  child: YoutubePlayer(
-                      progressColors: ProgressBarColors(),
-                      controller: _controller)),
-              // Positioned(
-              //   top: 100,right: 100,left: 100,bottom: 100,
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       IconButton(
-              //         onPressed: seekBackward,
-              //         icon: const Icon(Icons.replay_10,size: 30,color: Colors.white54,),
-              //       ),
-              //       const SizedBox(width: 30),
-              //       IconButton(
-              //         onPressed: seekForward,
-              //         icon: const Icon(Icons.forward_10,size: 30,color: Colors.white54,),
-              //       ),
-              //     ],
-              //   ),
-              // ),
+              appBar: AppBar(
+                title: const Text('Video Player'),
+              ),
+              body: ListView(
+                children: [
+                  player,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        _space,
+                        Text(
+                          _controller.metadata.title,
+                          style: const TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        _space,
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ));
   }
+
+  Widget get _space => const SizedBox(height: 10);
 }

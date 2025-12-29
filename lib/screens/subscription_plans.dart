@@ -364,6 +364,17 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
     final hasDiscount =
         plan.discountedPrice != null && plan.discountedPrice! < plan.mrp!;
 
+    // Check if this plan is below the current plan (cheaper or equal price)
+    final currentPlanPrice = currentSubscription?.plan?.discountedPrice ??
+        currentSubscription?.plan?.mrp ??
+        0;
+    final thisPlanPrice = plan.discountedPrice ?? plan.mrp ?? 0;
+    final isBelowCurrentPlan = currentSubscription != null &&
+        thisPlanPrice <= currentPlanPrice &&
+        !isCurrentPlan;
+    final isAboveCurrentPlan =
+        currentSubscription != null && thisPlanPrice > currentPlanPrice;
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -522,28 +533,34 @@ class _SubscriptionPlansScreenState extends State<SubscriptionPlansScreen> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed:
-                        isCurrentPlan ? null : () => _subscribeToPlan(plan),
+                    onPressed: (isCurrentPlan || isBelowCurrentPlan)
+                        ? null
+                        : () => _subscribeToPlan(plan),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: isCurrentPlan
                           ? kSecondaryColor
-                          : (plan.planName?.toLowerCase().contains('premium') ==
-                                  true)
-                              ? kDefaultColor
-                              : kSecondaryColor,
+                          : isBelowCurrentPlan
+                              ? kSecondaryColor
+                              : isAboveCurrentPlan
+                                  ? Colors.blue
+                                  : kSecondaryColor,
                       foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                       elevation: 0,
+                      disabledBackgroundColor: kSecondaryColor.withOpacity(0.5),
+                      disabledForegroundColor: Colors.white.withOpacity(0.7),
                     ),
                     child: Text(
                       isCurrentPlan
                           ? 'Current Plan'
-                          : (currentSubscription != null
-                              ? 'Upgrade'
-                              : 'Subscribe Now'),
+                          : isBelowCurrentPlan
+                              ? 'Downgrade Unavailable'
+                              : (currentSubscription != null
+                                  ? 'Upgrade'
+                                  : 'Subscribe Now'),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

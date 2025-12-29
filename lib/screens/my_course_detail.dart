@@ -4,6 +4,7 @@ import 'package:academy_lms_app/screens/course_detail.dart';
 import 'package:academy_lms_app/screens/image_viewer_Screen.dart';
 import 'package:academy_lms_app/widgets/appbar_one.dart';
 import 'package:academy_lms_app/widgets/from_vimeo_player.dart';
+import 'package:academy_lms_app/widgets/google_drive_player.dart';
 import 'package:academy_lms_app/widgets/new_youtube_player.dart';
 import 'package:academy_lms_app/widgets/vimeo_iframe.dart';
 import 'package:flutter/material.dart';
@@ -136,6 +137,8 @@ class _MyCourseDetailScreenState extends State<MyCourseDetailScreen>
   }
 
   void lessonAction(Lesson lesson) async {
+    print(lesson.lessonType);
+    print(lesson.videoUrl);
     if (lesson.lessonType == 'text') {
       Navigator.push(
           context,
@@ -186,25 +189,19 @@ class _MyCourseDetailScreenState extends State<MyCourseDetailScreen>
         final Match? match = regExp.firstMatch(lesson.videoUrl.toString());
         final fileId = match!.group(0)!;
 
+        print('google_drive');
         print(lesson.videoUrl);
         print(match);
+        print('File ID: $fileId');
 
-        // String url =
-        //     'https://drive.google.com/uc?export=download&id=${match!.group(0)}';
-        //     String url =
-        // 'https://drive.google.com/uc?export=view&id=${match!.group(0)}';
-        String url =
-            "https://www.googleapis.com/drive/v3/files/$fileId?alt=media";
-
-        print(url);
-
+        // Use the Google Drive embed player for better compatibility
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => PlayVideoFromNetwork(
-                  courseId: widget.courseId,
-                  lessonId: lesson.id!,
-                  videoUrl: url)),
+              builder: (context) => GoogleDrivePlayer(
+                    fileId: fileId,
+                    title: lesson.title ?? 'Video Player',
+                  )),
         );
       } else if (lesson.lessonType == 'html5') {
         // final RegExp regExp = RegExp(r'[-\w]{25,}');
@@ -367,14 +364,14 @@ class _MyCourseDetailScreenState extends State<MyCourseDetailScreen>
           },
         );
       } else {
-        print(lesson.videoUrl);
-        print(lesson.lessonType);
+        print("xxxxxxxxxxxx===>${lesson.videoUrl}");
+        print("===========>${lesson.lessonType}");
         Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => YoutubeVideoPlayerFlutter(
                   courseId: widget.courseId,
-                  lessonId: lesson.id!,
+                  lessonId: lesson.id,
                   videoUrl: lesson.videoUrl!),
             ));
       }

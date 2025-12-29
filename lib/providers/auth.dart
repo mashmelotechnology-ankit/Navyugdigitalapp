@@ -95,6 +95,9 @@ class Auth with ChangeNotifier {
       if (user.facebook != null) request.fields['facebook'] = user.facebook!;
       if (user.linkedIn != null) request.fields['linkedin'] = user.linkedIn!;
       if (user.userId != null) request.fields['user_id'] = user.userId!;
+      if (user.salonName != null) {
+        request.fields['salon_name'] = user.salonName!;
+      }
 
       // Add image file
       if (user.photo.toString() != "null") {

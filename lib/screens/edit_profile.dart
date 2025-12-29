@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:academy_lms_app/widgets/appbar_one.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -38,6 +39,7 @@ class _EditPrfileScreenState extends State<EditPrfileScreen> {
     'twitter': '',
     'facebook': '',
     'linkedin': '',
+    'salon_name': '',
   };
 
   @override
@@ -152,6 +154,9 @@ class _EditPrfileScreenState extends State<EditPrfileScreen> {
       final linkedin = _userData['linkedin']?.isNotEmpty ?? false
           ? _userData['linkedin']!
           : user?['linkedin'] ?? '';
+      final salonName = _userData['salon_name']?.isNotEmpty ?? false
+          ? _userData['salon_name']!
+          : user?['salon_name'] ?? '';
 
       // Handle image selection
       final photo = _image != null ? _image!.path : user?['photo'] ?? '';
@@ -171,6 +176,7 @@ class _EditPrfileScreenState extends State<EditPrfileScreen> {
           twitter: twitter,
           facebook: facebook,
           linkedIn: linkedin,
+          salonName: salonName,
           photo: photo, // Include the photo field
         );
       } else {
@@ -183,6 +189,7 @@ class _EditPrfileScreenState extends State<EditPrfileScreen> {
           twitter: twitter,
           facebook: facebook,
           linkedIn: linkedin,
+          salonName: salonName,
         );
       }
 
@@ -202,6 +209,7 @@ class _EditPrfileScreenState extends State<EditPrfileScreen> {
         'twitter': twitter,
         'facebook': facebook,
         'linkedin': linkedin,
+        'salon_name': salonName,
       };
 
       // sharedPreferences = await SharedPreferences.getInstance();
@@ -362,6 +370,41 @@ class _EditPrfileScreenState extends State<EditPrfileScreen> {
                                         ''; // Use an empty string if null
                                     _userData['name'] = value ??
                                         ''; // Use an empty string if null
+                                  },
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const CustomText(
+                                text: 'Salon Name',
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 5.0),
+                                child: TextFormField(
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                  initialValue: user?['salon_name'] ?? '',
+                                  decoration: getInputDecoration(''),
+                                  textCapitalization:
+                                      TextCapitalization.characters,
+                                  inputFormatters: [
+                                    TextInputFormatter.withFunction(
+                                      (oldValue, newValue) => TextEditingValue(
+                                        text: newValue.text.toUpperCase(),
+                                        selection: newValue.selection,
+                                      ),
+                                    ),
+                                  ],
+                                  onSaved: (value) {
+                                    _userData['salon_name'] = value ?? '';
                                   },
                                 ),
                               ),

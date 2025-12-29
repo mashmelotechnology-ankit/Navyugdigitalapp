@@ -49,7 +49,7 @@ class RazorpayService {
   }) {
     try {
       var options = {
-        'key':'rzp_test_RSdtuJrYr1Hq8D', // Replace with your actual Razorpay key
+        'key':'rzp_live_RlseC8GhaYiOYf', // Replace with your actual Razorpay key
         'amount': (amount * 100).toInt(), // Amount in paise
         'name': 'Navyug Digital',
         'description': 'Registration for $planName',

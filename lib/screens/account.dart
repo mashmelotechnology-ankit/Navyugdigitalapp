@@ -21,8 +21,7 @@ import 'refer_and_earn.dart';
 import 'subscription_plans.dart';
 import 'subscription_history.dart';
 import 'update_password.dart';
-import 'help_support_screen.dart';
-import 'poster_design_screen.dart';
+import 'tawk_chat_screen.dart';
 import 'template_editor_screen.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -134,13 +133,18 @@ class _AccountScreenState extends State<AccountScreen> {
                               fontWeight: FontWeight.w500,
                               colors: kGreyLightColor,
                             ),
-                            CustomText(
-                              text: user!['subscription']?['plan']
-                                      ['plan_name'] ??
-                                  "No Subscription",
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              colors: kGreyLightColor,
+                            Consumer<SubscriptionProvider>(
+                              builder: (context, subscriptionProvider, child) {
+                                final subscription =
+                                    subscriptionProvider.currentSubscription;
+                                return CustomText(
+                                  text: subscription?.plan?.planName ??
+                                      "No Subscription",
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w500,
+                                  colors: kGreyLightColor,
+                                );
+                              },
                             ),
                             const SizedBox(height: 15),
                             SizedBox(
@@ -357,7 +361,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                     const EdgeInsets.only(left: 10, right: 10),
                                 child: GestureDetector(
                                   child: const AccountListTile(
-                                    titleText: 'AI Personal Coach',
+                                    titleText: 'Support Chat',
                                     icon: 'assets/images/edit.png',
                                     actionType: 'help_support',
                                   ),
@@ -366,7 +370,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const HelpSupportScreen(),
+                                              const TawkChatScreen(),
                                         ));
                                   },
                                 ),

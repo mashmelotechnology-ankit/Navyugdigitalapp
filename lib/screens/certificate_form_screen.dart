@@ -27,6 +27,7 @@ class _CertificateFormScreenState extends State<CertificateFormScreen> {
   final _mobileController = TextEditingController();
   final _courseDurationController = TextEditingController();
   final _courseTitleController = TextEditingController();
+  final _syllabusDescriptionController = TextEditingController();
   final _courseCompletionDateController = TextEditingController();
   final _certificateDownloadDateController = TextEditingController();
 
@@ -51,6 +52,7 @@ class _CertificateFormScreenState extends State<CertificateFormScreen> {
   void _initializeFormData() {
     // Pre-fill form with course data
     _courseTitleController.text = widget.syllabusModel.title;
+    _syllabusDescriptionController.text = widget.syllabusModel.description;
 
     // Set current date as default download date
     final now = DateTime.now();
@@ -69,6 +71,7 @@ class _CertificateFormScreenState extends State<CertificateFormScreen> {
     _courseDurationController.dispose();
     _mobileController.dispose();
     _courseTitleController.dispose();
+    _syllabusDescriptionController.dispose();
     _courseCompletionDateController.dispose();
     _certificateDownloadDateController.dispose();
     super.dispose();
@@ -203,13 +206,12 @@ class _CertificateFormScreenState extends State<CertificateFormScreen> {
       syllabusId: widget.syllabusModel.id,
       templateId: certificateProvider.selectedTemplateId,
       syllabusTitle: widget.syllabusModel.title,
+      syllabusDescription: _syllabusDescriptionController.text.trim(),
       courseDuration:
           '${_courseDurationController.text.trim()} ${_selectedDurationUnit.toLowerCase()}',
       studentName: _studentNameController.text.trim(),
       fatherName: _fatherNameController.text.trim(),
       mobileNumber: _mobileController.text.trim(),
-      courseCompletionDate: _courseCompletionDateController.text.trim(),
-      certificateDownloadDate: _certificateDownloadDateController.text.trim(),
       courseLevel: _selectedCourseLevel,
       studentPhoto: _studentPhoto,
     );
@@ -664,7 +666,7 @@ class _CertificateFormScreenState extends State<CertificateFormScreen> {
 
                   const SizedBox(height: 16),
 
-                  // Row with Course Title and Instructor
+                  // Row with Course Title and Course Level
                   Row(
                     children: [
                       Expanded(
@@ -728,67 +730,30 @@ class _CertificateFormScreenState extends State<CertificateFormScreen> {
 
                   const SizedBox(height: 16),
 
-                  // Date fields
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _courseCompletionDateController,
-                          readOnly: true,
-                          onTap: () =>
-                              _selectDate(_courseCompletionDateController),
-                          decoration: InputDecoration(
-                            labelText: 'Course Completion Date *',
-                            labelStyle: const TextStyle(
-                                fontWeight: FontWeight.w500, color: kTextColor),
-                            suffixIcon: const Icon(Icons.calendar_today),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide:
-                                  const BorderSide(color: kDefaultColor),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return 'Completion date is required';
-                            }
-                            return null;
-                          },
-                        ),
+                  // Syllabus Description field
+                  TextFormField(
+                    controller: _syllabusDescriptionController,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      labelText: 'Syllabus Description *',
+                      labelStyle: const TextStyle(
+                          fontWeight: FontWeight.w500, color: kTextColor),
+                      hintText: 'Enter syllabus description',
+                      alignLabelWithHint: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _certificateDownloadDateController,
-                          readOnly: true,
-                          onTap: () =>
-                              _selectDate(_certificateDownloadDateController),
-                          decoration: InputDecoration(
-                            labelText: 'Certificate Date *',
-                            labelStyle: const TextStyle(
-                                fontWeight: FontWeight.w500, color: kTextColor),
-                            suffixIcon: const Icon(Icons.calendar_today),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                              borderSide:
-                                  const BorderSide(color: kDefaultColor),
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.trim().isEmpty) {
-                              return 'Certificate date is required';
-                            }
-                            return null;
-                          },
-                        ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: kDefaultColor),
                       ),
-                    ],
+                    ),
+                    validator: (value) {
+                      if (value == null || value.trim().isEmpty) {
+                        return 'Syllabus description is required';
+                      }
+                      return null;
+                    },
                   ),
 
                   const SizedBox(height: 32),

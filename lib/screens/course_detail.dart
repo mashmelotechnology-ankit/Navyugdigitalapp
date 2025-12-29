@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:academy_lms_app/models/course_detail.dart';
 import 'package:academy_lms_app/screens/tab_screen.dart';
 import 'package:academy_lms_app/widgets/from_vimeo_player.dart';
+import 'package:academy_lms_app/widgets/google_drive_player.dart';
 import 'package:academy_lms_app/widgets/new_youtube_player.dart';
 import 'package:academy_lms_app/widgets/no_preview_video.dart';
 import 'package:flutter/material.dart';
@@ -560,8 +561,7 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     YoutubeVideoPlayerFlutter(
-                                                  courseId: loadedCourseDetails
-                                                      .courseId!,
+                                                  courseId: loadedCourseDetails.courseId!,
                                                   videoUrl: previewUrl,
                                                 ),
                                               ),
@@ -573,18 +573,17 @@ class _CourseDetailScreenState extends State<CourseDetailScreen>
                                                 regExp.firstMatch(
                                                     loadedCourseDetails.preview
                                                         .toString());
-                                            // print(match);
-                                            String url =
-                                                'https://drive.google.com/uc?export=download&id=${match!.group(0)}';
+                                            final fileId = match!.group(0)!;
+                                            
+                                            // Use Google Drive embed player
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      PlayVideoFromNetwork(
-                                                          courseId:
-                                                              loadedCourseDetails
-                                                                  .courseId!,
-                                                          videoUrl: url)),
+                                                      GoogleDrivePlayer(
+                                                        fileId: fileId,
+                                                        title: loadedCourseDetails.title ?? 'Preview Video',
+                                                      )),
                                             );
                                           } else if (isVimeo) {
                                             String vimeoVideoId =

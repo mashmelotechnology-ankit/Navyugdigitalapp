@@ -67,7 +67,7 @@ class SubscriptionPlans with ChangeNotifier {
     planIdSelected = planId;
     ctx = context;
     var options = {
-      'key': 'rzp_test_RSdtuJrYr1Hq8D', // Replace with your Razorpay key
+      'key': 'rzp_live_RlseC8GhaYiOYf', // Replace with your Razorpay key
       'amount': (amount * 100).toInt(), // Amount in paise
       'name': 'Navyug Digital',
       'description': description,

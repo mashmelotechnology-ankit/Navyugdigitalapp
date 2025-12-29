@@ -16,6 +16,7 @@ class User {
   String? address;
   String? photo;
   String? subscriptionPlan;
+  String? salonName;
 
   User({
     this.userId,
@@ -30,6 +31,7 @@ class User {
     this.address,
     this.photo,
     this.subscriptionPlan,
+    this.salonName,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

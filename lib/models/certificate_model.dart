@@ -391,8 +391,7 @@ class CertificateGenerateRequestModel {
   final String fatherName;
   final String mobileNumber;
   final String syllabusTitle;
-  final String courseCompletionDate;
-  final String certificateDownloadDate;
+  final String syllabusDescription;
   final String courseLevel;
   final dynamic studentPhoto; // Can be File or null
 
@@ -404,8 +403,7 @@ class CertificateGenerateRequestModel {
     required this.studentName,
     required this.fatherName,
     required this.syllabusTitle,
-    required this.courseCompletionDate,
-    required this.certificateDownloadDate,
+    required this.syllabusDescription,
     required this.courseLevel,
     this.studentPhoto,
   });
@@ -419,8 +417,7 @@ class CertificateGenerateRequestModel {
       'student_name': studentName,
       'father_name': fatherName,
       'syllabus_title': syllabusTitle,
-      'course_completion_date': courseCompletionDate,
-      'certificate_download_date': certificateDownloadDate,
+      'syllabus_description': syllabusDescription,
       'course_level': courseLevel,
       'photo': studentPhoto,
       // Note: studentPhoto will be handled separately for file upload

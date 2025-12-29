@@ -264,8 +264,7 @@ class CertificateProvider with ChangeNotifier {
           'student_name': request.studentName,
           'father_name': request.fatherName,
           'syllabus_title': request.syllabusTitle,
-          'course_completion_date': request.courseCompletionDate,
-          'certificate_download_date': request.certificateDownloadDate,
+          'syllabus_description': request.syllabusDescription,
           'course_level': request.courseLevel,
         });
 
@@ -278,8 +277,6 @@ class CertificateProvider with ChangeNotifier {
         print('student_name: ${request.studentName}');
         print('father_name: ${request.fatherName}');
         print('syllabus_title: ${request.syllabusTitle}');
-        print('course_completion_date: ${request.courseCompletionDate}');
-        print('certificate_download_date: ${request.certificateDownloadDate}');
         print('course_level: ${request.courseLevel}');
         print('================================');
 
@@ -319,8 +316,6 @@ class CertificateProvider with ChangeNotifier {
         print('student_name: ${request.studentName}');
         print('father_name: ${request.fatherName}');
         print('syllabus_title: ${request.syllabusTitle}');
-        print('course_completion_date: ${request.courseCompletionDate}');
-        print('certificate_download_date: ${request.certificateDownloadDate}');
         print('course_level: ${request.courseLevel}');
         print('================================');
 

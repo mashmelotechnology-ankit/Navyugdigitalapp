@@ -8,6 +8,7 @@ import 'package:academy_lms_app/screens/home.dart';
 import 'package:academy_lms_app/screens/login.dart';
 import 'package:academy_lms_app/screens/my_courses.dart';
 import 'package:academy_lms_app/screens/subscription_plans.dart';
+import 'package:academy_lms_app/screens/tawk_chat_screen.dart';
 import 'package:academy_lms_app/widgets/appbar_one.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
@@ -82,9 +83,56 @@ class _TabsScreenState extends State<TabsScreen> {
       appBar: const AppBarOne(logo: 'logo.png'),
       body: _isInit
           ? Center(child: CircularProgressIndicator())
-          : IndexedStack(
-              index: _selectedPageIndex,
-              children: _pages(),
+          : Stack(
+              children: [
+                IndexedStack(
+                  index: _selectedPageIndex,
+                  children: _pages(),
+                ),
+                // Floating Chat Button (bottom right)
+                if (isLoggedIn && _selectedPageIndex != 2)
+                  Positioned(
+                    bottom: 80,
+                    right: 16,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const TawkChatScreen(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xFF6C63FF),
+                              Color(0xFF5A52E0),
+                            ],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xFF6C63FF).withOpacity(0.4),
+                              blurRadius: 12,
+                              offset: Offset(0, 4),
+                            ),
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.chat_bubble_outline,
+                          color: Colors.white,
+                          size: 28,
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             ),
       floatingActionButton: _selectedPageIndex != 2
           ? FloatingActionButton(
